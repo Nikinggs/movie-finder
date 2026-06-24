@@ -3,16 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Movie Finder</title>
+
   </head>
-  <body>
+  <body class="bg-gray-100 min-h-screen">
     <header>
-      <h1>Movie Finder</h1>
-      <p>Welcome to the Movie Finder!</p>
+      <h1 class="text-4xl font-bold text-center mt-6">Movie Finder</h1>
+      <p class="text-left text-gray-600 ml-4">Find your favorite movies!</p>
     </header>
 
     <main>
-      <form id="movie-form">
+      <form id="movie-form" class="flex flex-col items-center mt-6">
         <label for="movie-title">Enter a movie title:</label>
         <input
           type="text"
@@ -20,15 +22,16 @@
           name="movie-title"
           placeholder="Search for a movie..."
           required
+          class="border border-gray-300 rounded-lg px-2 py-1 w-80 mb-4"
         />
-        <button type="button" id="searchBtn">Search</button>
+        <button type="button" id="searchBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+          Search
+        </button>
       </form>
       <div id="status"></div>
-
-      <div id="movieDetails"></div>
       <h2>Favorites</h2>
-      <div id="favoritesContainer"></div>
-      <div id="movieContainer"></div>
+      <div id="favoritesContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 p-6"></div>
+      <div id="movieContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 p-6"></div>
       <div id="pagination"></div>
     </main>
 
