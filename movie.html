@@ -1,23 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Movie Finder</h1>
-  <p>Welcome to the Movie Finder!</p>
-  <form id="movie-form">
-    <label for="movie-title">Enter a movie title:</label>
-    <input type="text" id="searchInput" name="movie-title" placeholder="Search for a movie..." required>
-    <button type="search" id="searchBtn">Search</button>
-    </form>
-    <div id="status"></div>
-    <div id="movieContainer"></div>
-    <div id="movieDetails"></div>
-    
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>Movie Finder</h1>
+      <p>Welcome to the Movie Finder!</p>
+    </header>
+
+    <main>
+      <form id="movie-form">
+        <label for="movie-title">Enter a movie title:</label>
+        <input
+          type="text"
+          id="searchInput"
+          name="movie-title"
+          placeholder="Search for a movie..."
+          required
+        />
+        <button type="button" id="searchBtn">Search</button>
+      </form>
+      <div id="status"></div>
+
+      <div id="movieDetails"></div>
+      <h2>Favorites</h2>
+      <div id="favoritesContainer"></div>
+      <div id="movieContainer"></div>
+    </main>
+
+    <footer>nikinggs</footer>
     <script src="trial.js"></script>
-</body>
+  </body>
 </html>

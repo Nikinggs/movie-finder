@@ -5,11 +5,24 @@ const movieForm = document.getElementById('movie-form');
 const searchInput = document.getElementById('searchInput')
 const searchButton = document.getElementById('searchBtn')
 const movieContainer = document.getElementById('movieContainer')
+const movieDetails = document.getElementById('movieDetails')
 const status = document.getElementById('status')
 
+const favoritesContainer = document.getElementById('favoritesContainer');
+
+
+
+let favorites = [] //localstorage 
+const savedFavorites = localStorage.getItem('favorites');
+if (savedFavorites.length > 0) {
+  favorites = JSON.parse(savedFavorites);
+  renderFavorites();
+}
 
 //OTHER VARIABLE NEEDED
 
+
+let currentMovies = []
 let debounceTimer;  //needed for clearTimeout()
 let currentPage = 1; //needed for pagination
 let currentTitle = ""; //needed to remember what was searched in next page
@@ -38,6 +51,7 @@ async function fetchMovies(title, page = 1) {
     status.textContent = "";
     return;
   }
+  currentMovies = data.Search
   renderMovies(data.Search);
   status.textContent = "";
   return data; 
@@ -65,11 +79,11 @@ function renderMovies(movies) {
   movies.forEach(movie => {
     movieContainer.innerHTML +=
     `
-    <div class="movie-card">
+    <div class="movie-card" onclick="fetchMovieDetails('${movie.imdbID}')">
       <img src="${movie.Poster}" alt="${movie.Title}">
       <h3>${movie.Title}</h3>
       <p>${movie.Year}</p>
-      <button>Add Favorite</button>
+      <button onclick="addFavorite('${movie.imdbID}')">Add Favorite</button>
     </div>
     `
     ;
@@ -94,6 +108,7 @@ searchButton.addEventListener(
 
 searchInput.addEventListener('keydown', function (event) {
   if (event.key === 'Enter') {
+    event.preventDefault();
     const title = searchInput.value.trim();
     fetchMovies(title);
   }
@@ -129,3 +144,82 @@ searchInput.addEventListener('input',
 //When a user clicks on a movie, we want to fetch and show title, year, plot, director, actors, runtime, genre, and ratings. 
 //Now we need another API call to get the details of the movie. We can use the imdbID from the search results to make this call.
 //now we add movie details in html.
+//lets make the card clickable using onclick in html
+
+async function fetchMovieDetails(Id) 
+  
+{
+  try {
+    const url = `https://www.omdbapi.com/?apikey=${API_KEY}&i=${Id}`;
+    let response = await fetch(url);
+    const data = await response.json();
+    movieDetails.innerHTML = `
+    <h1>${data.Title}</h1>
+    <p><strong>Year:</strong> ${data.Year}</p>
+    <p><strong>Plot:</strong> ${data.Plot}</p>
+`;
+movieDetails.scrollIntoView({ behavior: 'smooth' });
+  } catch (error) {
+    console.error('Error fetching movie details:', error);
+  }
+}
+
+
+//FAVORITE WHERE WE STOTE IN LOCALSTORAGE
+//CREAT favorit variable
+//create where to store current search
+//add onclick to favorite button in render
+//save data.search in currentmovies inside fetch
+//create addfavorite function
+//find the movie
+//push movie to favorites
+//check if movie already exist in favorites avoid duplicates
+//save to local storage
+//load from local storage by saving in a variable savedfavorites at the top 
+//creat html to display favorites in a separate section
+//grab the favorites container from html
+
+
+function addFavorite(id) {
+  const movie = currentMovies.find(
+    movie => movie.imdbID === id
+  );
+  const exists = favorites.some(fav => fav.imdbID === id);
+  if (exists) {
+    alert('Movie is already in favorites!');
+    return;
+  } else if (!exists) {
+    favorites.push(movie);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    renderFavorites();
+  }
+  console.log(movie)
+}
+
+//RENDER FAVORITES
+//create a function to render favorites in the favorites container
+//loop through the favorites array and create html for each favorite movie
+//display title, year, poster and remove button
+//add event listener to remove button to remove favorite from local storage and update the favorites array
+//renderfavorites in addfavorite function after adding a movie to favorites
+//add remove button to each favorite movie card
+
+function renderFavorites() {
+  favoritesContainer.innerHTML = "";
+  favorites.forEach(movie => {
+    favoritesContainer.innerHTML += `
+    <div class="favorite-card">
+      <img src="${movie.Poster}" alt="${movie.Title}" width="100" height="150">
+      <h3>${movie.Title}</h3>
+      <p><strong>Year:</strong> ${movie.Year}</p>
+      <button onclick="removeFavorite('${movie.imdbID}')">Remove</button>
+    </div>
+  `});  
+}
+
+//REMOVE FAVORITEremove button function 
+function removeFavorite(id) {
+  favorites = favorites.filter(movie => movie.imdbID !== id);
+  localStorage.setItem('favorites', JSON.stringify(favorites));
+  renderFavorites();
+}
