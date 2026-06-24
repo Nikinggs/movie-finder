@@ -64,8 +64,8 @@ function renderMovies(movies) {
   movies.forEach(movie => {
     movieContainer.innerHTML +=
     `
-    <div class="movie-card" onclick="fetchMovieDetails('${movie.imdbID}')">
-      <img src="${movie.Poster}" alt="${movie.Title}">
+    <div class="movie-card bg-white rounded-lg shadow-md p-4 cursor-pointer hover:scale-105 transition-transform duration-200" onclick="fetchMovieDetails('${movie.imdbID}')">
+      <img src="${movie.Poster}" alt="${movie.Title}" class="w-full h-64 object-cover rounded-lg mb-4">
       <h3>${movie.Title}</h3>
       <p>${movie.Year}</p>
       <button onclick="addFavorite('${movie.imdbID}')">Add Favorite</button>
