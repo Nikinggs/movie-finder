@@ -67,11 +67,13 @@ function renderMovies(movies) {
   movies.forEach(movie => {
     movieContainer.innerHTML +=
     `
-    <div class="movie-card bg-white rounded-lg shadow-md p-4 cursor-pointer hover:scale-105 transition-transform duration-200" onclick="fetchMovieDetails('${movie.imdbID}')">
+    <div class="bg-white rounded-xl shadow-md p-4 cursor-pointer hover:shadow-xl overflow-hidden hover:-translate-y-1 transition duration-300 flex flex-col h-full" onclick="fetchMovieDetails('${movie.imdbID}')">
       <img src="${movie.Poster}" alt="${movie.Title}" class="w-full h-64 object-cover rounded-lg mb-4">
-      <h3>${movie.Title}</h3>
-      <p>${movie.Year}</p>
-      <button onclick="addFavorite('${movie.imdbID}')">Add Favorite</button>
+      <h3 class="text-lg font-bold mb-2">${movie.Title}</h3>
+      <p class="text-gray-600">${movie.Year}</p>
+      <button onclick="addFavorite('${movie.imdbID}')" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300 mt-2">
+        Add Favorite
+      </button>
     </div>
     `
     ;
@@ -128,10 +130,10 @@ async function fetchMovieDetails(Id)
     <img
       src="${data.Poster}"
       alt="${data.Title}"
-      class="w-full rounded-lg"
+      class="w-full rounded-lg object-cover"
     >
 
-    <div>
+    <div class="space-y-2 text-sm">
 
       <h2 class="text-2xl font-bold mb-3">
         ${data.Title}
@@ -214,11 +216,13 @@ function renderFavorites() {
   favoritesContainer.innerHTML = "";
   favorites.forEach(movie => {
     favoritesContainer.innerHTML += `
-    <div class="favorite-card">
-      <img src="${movie.Poster}" alt="${movie.Title}" width="100" height="150">
-      <h3>${movie.Title}</h3>
-      <p><strong>Year:</strong> ${movie.Year}</p>
-      <button onclick="removeFavorite('${movie.imdbID}')">Remove</button>
+    <div class="favorite-card bg-white rounded-lg shadow p-3 text-center mb-4">
+      <img src="${movie.Poster}" alt="${movie.Title}" class="w-full h-48 object-cover rounded-lg-2">
+      <h3 class="text-lg font-bold mb-2">${movie.Title}</h3>
+      <p class="text-gray-600"><strong>Year:</strong> ${movie.Year}</p>
+      <button onclick="removeFavorite('${movie.imdbID}')" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300 mt-2">
+        Remove
+      </button>
     </div>
   `});  
 }
@@ -238,13 +242,19 @@ function renderPagination(totalResults) {
   
   if (currentPage > 1) {
     pagination.innerHTML += `
-    <button onclick="changePage(${currentPage - 1})">Previous</button>
+    <button onclick="changePage(${currentPage - 1})" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+      Previous
+    </button>
+    <span class="self-center font-semibold">Page ${currentPage} of ${totalpages}</span>
     `;
   }
+
   
   if (currentPage < totalpages) {
     pagination.innerHTML += `
-    <button onclick="changePage(${currentPage + 1})">Next</button>
+    <button onclick="changePage(${currentPage + 1})" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+      Next
+    </button>
     `;
   }
 }

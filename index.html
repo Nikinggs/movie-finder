@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Movie Finder</title>
-
   </head>
   <body class="bg-gray-100 min-h-screen">
     <header>
-      <h1 class="text-4xl font-bold text-center mt-6">Movie Finder</h1>
-      <p class="text-left text-gray-600 ml-4">Find your favorite movies!</p>
+      <h1 class="text-5xl font-bold text-center mt-6 mb-2">🎬 Movie Finder</h1>
+
+      <p class="text-center text-gray-600 ml-4">Find your favorite movies!</p>
     </header>
 
     <main>
@@ -24,28 +24,50 @@
           required
           class="border border-gray-300 rounded-lg px-2 py-1 w-80 mb-4"
         />
-        <button type="button" id="searchBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
+        <button
+          type="button"
+          id="searchBtn"
+          class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+        >
           Search
         </button>
       </form>
       <div id="status"></div>
-      <h2>Favorites</h2>
-      <div id="favoritesContainer" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 p-6"></div>
-      <div id="movieContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 p-6"></div>
-      <div id="pagination"></div>
+      <h2 class="text-3xl font-bold mb-4" mt-8>Favorites</h2>
+      <div
+        id="favoritesContainer"
+        class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 p-6"
+      ></div>
+      <div
+        id="movieContainer"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 p-6"
+      ></div>
+      <div id="pagination" class="flex justify-center gap-4 mt-6 mt-b"></div>
 
-      <div id="movieModal" class="fixed inset-0 bg-black/70 bg-opacity-50 flex items-center justify-center hidden p-4">
-        <div id="modalContent" class="bg-white rounded-lg  p-6 w-full max-w-lg relative overflow-y-auto max-h-[80vh]">
-          <button id="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+      <div
+        id="movieModal"
+        class="fixed inset-0 bg-black/70 bg-opacity-50 flex items-center justify-center hidden p-4 backdrop-blur-sm z-50"
+      >
+        <div
+          id="modalContent"
+          class="bg-white rounded-lg p-6 w-full max-w-lg relative overflow-y-auto max-h-[80vh]"
+        >
+          <button
+            id="closeModal"
+            class="absolute top-2 right-3 text-2xl font-bold hover:scale-110 tra text-gray-500 hover:text-gray-700"
+          >
             x
           </button>
           <div id="modalBody"></div>
         </div>
       </div>
 
-      </main>
+      <div id="pageInfo" class="text-center font-semibold mt-4"></div>
+    </main>
 
-    
+    <footer class="text-center mt-8 mb-4 text-gray-600">
+      &copy; 2026 Movie Finder IotbTech Web Dev. All rights reserved.
+    </footer>
     <script src="script.js"></script>
   </body>
 </html>
