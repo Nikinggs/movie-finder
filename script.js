@@ -10,6 +10,9 @@ const status = document.getElementById('status')
 
 const favoritesContainer = document.getElementById('favoritesContainer');
 const pagination = document.getElementById('pagination');
+const movieModal = document.getElementById('movieModal');
+const closeModal = document.getElementById('closeModal');
+const modalBody = document.getElementById('modalBody');
 
 
 
@@ -119,20 +122,75 @@ async function fetchMovieDetails(Id)
     const url = `https://www.omdbapi.com/?apikey=${API_KEY}&i=${Id}`;
     let response = await fetch(url);
     const data = await response.json();
-    movieDetails.innerHTML = `
-    <h1>${data.Title}</h1>
-    <p><strong>Year:</strong> ${data.Year}</p>
-    <p><strong>Plot:</strong> ${data.Plot}</p>
+     modalBody.innerHTML = `
+  <div class="grid md:grid-cols-2 gap-4">
+
+    <img
+      src="${data.Poster}"
+      alt="${data.Title}"
+      class="w-full rounded-lg"
+    >
+
+    <div>
+
+      <h2 class="text-2xl font-bold mb-3">
+        ${data.Title}
+      </h2>
+
+      <p>
+        <strong>Year:</strong>
+        ${data.Year}
+      </p>
+
+      <p>
+        <strong>Genre:</strong>
+        ${data.Genre}
+      </p>
+
+      <p>
+        <strong>Director:</strong>
+        ${data.Director}
+      </p>
+
+      <p>
+        <strong>Actors:</strong>
+        ${data.Actors}
+      </p>
+
+      <p>
+        <strong>IMDb Rating:</strong>
+        ${data.imdbRating}
+      </p>
+
+      <p>
+        <strong>Runtime:</strong>
+        ${data.Runtime}
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="mt-4">
+
+    <h3 class="font-bold text-lg">
+      Plot
+    </h3>
+
+    <p>
+      ${data.Plot}
+    </p>
+
+  </div>
 `;
-movieDetails.scrollIntoView({ behavior: 'smooth' });
+    movieModal.classList.remove('hidden');
+    movieModal.scrollIntoView({ behavior: 'smooth' });
   } catch (error) {
     console.error('Error fetching movie details:', error);
   }
 }
 
-
 //FAVORITE WHERE WE STOTE IN LOCALSTORAGE
-
 
 function addFavorite(id) {
   const movie = currentMovies.find(
@@ -194,3 +252,13 @@ function renderPagination(totalResults) {
 function changePage(page) {
   fetchMovies(currentTitle, page);
 }
+
+closeModal.addEventListener('click', () => {
+  movieModal.classList.add('hidden');
+});
+
+movieModal.addEventListener('click', (event) => {
+  if (event.target === movieModal) {
+    movieModal.classList.add('hidden');
+  }
+});
