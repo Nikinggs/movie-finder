@@ -14,7 +14,7 @@ const favoritesContainer = document.getElementById('favoritesContainer');
 
 let favorites = [] //localstorage 
 const savedFavorites = localStorage.getItem('favorites');
-if (savedFavorites.length > 0) {
+if (savedFavorites) {
   favorites = JSON.parse(savedFavorites);
   renderFavorites();
 }
