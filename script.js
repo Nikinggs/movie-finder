@@ -9,6 +9,7 @@ const movieDetails = document.getElementById('movieDetails')
 const status = document.getElementById('status')
 
 const favoritesContainer = document.getElementById('favoritesContainer');
+const pagination = document.getElementById('pagination');
 
 
 
@@ -22,7 +23,7 @@ if (savedFavorites) {
 //OTHER VARIABLE NEEDED
 
 
-let currentMovies = []
+let currentMovies = []//needed for favorite to remember
 let debounceTimer;  //needed for clearTimeout()
 let currentPage = 1; //needed for pagination
 let currentTitle = ""; //needed to remember what was searched in next page
@@ -31,6 +32,8 @@ let currentTitle = ""; //needed to remember what was searched in next page
 //CREATE SEARCH FUNCTION: async is needed because API request
 
 async function fetchMovies(title, page = 1) {
+  currentTitle = title
+  currentPage = page
   try {
     status.textContent = "Loading...";
   const url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${title}&page=${page}`;
@@ -43,7 +46,9 @@ async function fetchMovies(title, page = 1) {
   }
   currentMovies = data.Search
   renderMovies(data.Search);
-  status.textContent = "";
+  renderPagination(Number(data.totalResults));
+  console.log("totalResults:", data.totalResults);
+    status.textContent = "";
   return data; 
   }
   catch (error) {
@@ -142,7 +147,7 @@ function addFavorite(id) {
     localStorage.setItem('favorites', JSON.stringify(favorites));
     renderFavorites();
   }
-  console.log(movie)
+  
 }
 
 //RENDER FAVORITES
@@ -165,4 +170,27 @@ function removeFavorite(id) {
   favorites = favorites.filter(movie => movie.imdbID !== id);
   localStorage.setItem('favorites', JSON.stringify(favorites));
   renderFavorites();
+}
+
+//PAGINATION
+
+function renderPagination(totalResults) {
+  const totalpages = Math.ceil(totalResults / 10);
+  pagination.innerHTML = "";
+  
+  if (currentPage > 1) {
+    pagination.innerHTML += `
+    <button onclick="changePage(${currentPage - 1})">Previous</button>
+    `;
+  }
+  
+  if (currentPage < totalpages) {
+    pagination.innerHTML += `
+    <button onclick="changePage(${currentPage + 1})">Next</button>
+    `;
+  }
+}
+
+function changePage(page) {
+  fetchMovies(currentTitle, page);
 }

@@ -223,3 +223,35 @@ function removeFavorite(id) {
   localStorage.setItem('favorites', JSON.stringify(favorites));
   renderFavorites();
 }
+
+
+//PAGINATION
+//ADD PAGINATION TO HTML
+//PLACE IT AFTER MOVIE CONTAINER
+//grab the element
+//update search title: currentTitle in fetchmovies to title
+//create pagination function
+//creat changepage function
+//call pagination inside ferchmovie
+
+function renderPagination(totalResults) {
+  const totalpages = Math.ceil(totalResults / 10);
+  pagination.innerHTML = "";
+  
+
+  if (currentPage > 1) {
+    pagination.innerHTML += `
+    <button onclick="changePage(${currentPage - 1})">Previous</button>
+    `;
+  }
+  
+  if (currentPage < totalpages) {
+    pagination.innerHTML += `
+    <button onclick="changePage(${currentPage + 1})">Next</button>
+    `;
+  }
+}
+
+function changePage(page) {
+  fetchMovies(currentTitle, page);
+}
