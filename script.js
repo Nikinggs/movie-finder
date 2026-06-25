@@ -64,16 +64,26 @@ async function fetchMovies(title, page = 1) {
 
 function renderMovies(movies) {
   movieContainer.innerHTML = "";
-  movies.forEach(movie => {
+
+  movies.forEach(movie => {   
+    const poster = movie.Poster === "N/A" ? "https://via.placeholder.com/300x450?text=No+Image" : movie.Poster;
+
     movieContainer.innerHTML +=
-    `
-    <div class="bg-white rounded-xl shadow-md p-4 cursor-pointer hover:shadow-xl overflow-hidden hover:-translate-y-1 transition duration-300 flex flex-col h-full" onclick="fetchMovieDetails('${movie.imdbID}')">
-      <img src="${movie.Poster}" alt="${movie.Title}" class="w-full h-64 object-cover rounded-lg mb-4">
+     `
+    <div class="bg-white rounded-xl shadow-md p-4 cursor-pointer hover:shadow-xl overflow-hidden hover:-translate-y-1 transition duration-300 flex flex-col h-full"> 
+ 
+    <div onclick="fetchMovieDetails('${movie.imdbID}')">
+      <img src="${poster}" alt="${movie.Title}" class="w-full h-64 object-cover rounded-lg mb-4">
+
       <h3 class="text-lg font-bold mb-2">${movie.Title}</h3>
-      <p class="text-gray-600">${movie.Year}</p>
-      <button onclick="addFavorite('${movie.imdbID}')" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300 mt-2">
+
+      <p class="text-gray-600">${movie.Year}</p> 
+    </div>
+
+        <button onclick="addFavorite('${movie.imdbID}')" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300 mt-2">
         Add Favorite
       </button>
+
     </div>
     `
     ;
@@ -186,7 +196,6 @@ async function fetchMovieDetails(Id)
   </div>
 `;
     movieModal.classList.remove('hidden');
-    movieModal.scrollIntoView({ behavior: 'smooth' });
   } catch (error) {
     console.error('Error fetching movie details:', error);
   }

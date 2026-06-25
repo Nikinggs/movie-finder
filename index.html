@@ -6,14 +6,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Movie Finder</title>
   </head>
-  <body class="bg-gradient-to-br from-pink-700 via-purple-500 to-red-700 bg-white/90 backdrop-blur-sm min-h-screen">
-    <header>
+  <body class="bg-gradient-to-br from-pink-700 via-purple-500 to-red-700  backdrop-blur-sm min-h-screen flex flex-col">
+    <header> 
       <h1 class="text-5xl font-bold text-center text-white mt-6 mb-2">🎬 Movie Finder</h1>
 
       <p class="text-center text-white-600 ml-4">Find your favorite movies!</p>
     </header>
 
-    <main>
+    <main class="flex-grow p-4">
       <form id="movie-form" class="flex flex-col items-center mt-6">
         <label for="movie-title">Enter a movie title:</label>
         <input
@@ -33,7 +33,7 @@
         </button>
       </form>
       <div id="status"></div>
-      <h2 class="text-3xl font-bold mb-4" mt-8>Favorites</h2>
+      <h2 class="text-3xl font-bold mb-4" mt-8 pl-4>Favorites</h2>
       <div
         id="favoritesContainer"
         class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 p-6"
@@ -46,11 +46,11 @@
 
       <div
         id="movieModal"
-        class="fixed inset-0 bg-black/70 bg-opacity-50 flex items-center justify-center hidden p-4 backdrop-blur-sm z-50"
+        class="fixed inset-0 bg-black/70 hidden p-4 md: flex md:items-center md:justify-center backdrop-blur-sm z-50"
       >
         <div
           id="modalContent"
-          class="bg-white rounded-lg p-6 w-full max-w-lg relative overflow-y-auto max-h-[80vh]"
+          class="bg-white rounded-t-3xl md:rounded-lg p-6 w-full max-w-lg md:relative absolute bottom-0 overflow-y-auto max-h-[80vh]"
         >
           <button
             id="closeModal"
